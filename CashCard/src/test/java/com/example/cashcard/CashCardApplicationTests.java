@@ -48,6 +48,13 @@ class CashCardApplicationTests {
     }
 
     @Test
+    void addCash_addCashCard_return409Conflict(){
+        var cash = new CashCard(99L,2.0);
+        var response = restTemplate.postForEntity("/cashcards/add", cash, CashCard.class);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CONFLICT);
+    }
+
+    @Test
     void deleteCash_deleteCashCardWithID_return400(){
         var cashId = 99L;
         restTemplate.delete("/cashcards/delete/"+cashId);

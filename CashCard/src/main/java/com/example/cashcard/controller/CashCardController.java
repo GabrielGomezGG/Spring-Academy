@@ -32,6 +32,9 @@ public class CashCardController {
 
     @PostMapping("/add")
     public ResponseEntity<CashCard> addCashCard(@RequestBody CashCard cashCard){
+        if(cashCardRepository.existsById(cashCard.getId())){
+            return new ResponseEntity<CashCard>(HttpStatus.CONFLICT);
+        }
         var response = cashCardRepository.save(cashCard);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
